@@ -20,5 +20,5 @@ AS
 		PatientBirthDate,
 		PatientNotes,
 		OwnerId
-FROM dbo.PatientInfo
+FROM dbo.vVetClinicPatients
 WHERE OwnerId = @OwnerId;
