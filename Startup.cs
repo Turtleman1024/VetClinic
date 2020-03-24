@@ -11,7 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using VetClinic.Data;
 using VetClinic.Options;
+using VetClinic.Business;
+using VetClinic.Data.Interfaces;
+using VetClinic.Data.MsSqlStore;
 
 namespace VetClinic
 {
@@ -27,10 +32,19 @@ namespace VetClinic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContextPool<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Turtleman's Vet Clinic", Version = "v1" });
             });
+
+            services.AddTransient<IVetClinicBusinessService, VetClinicBusinessService>();
+            services.AddTransient<IVetClinicStore, VetClinicMsSqlStore>();
+
             services.AddControllers();
         }
 
