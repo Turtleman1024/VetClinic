@@ -12,5 +12,6 @@ namespace VetClinic.Data.Interfaces
         Task<List<Owner>> GetAllOwnersAsync();
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
+        Task<int> CreateOwnerAsync(Owner newOwner);
     }
 }

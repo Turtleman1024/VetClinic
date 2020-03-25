@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
@@ -49,6 +50,32 @@ namespace VetClinic.Data.MsSqlStore
             }
 
             return owner;
+        }
+
+        public async Task<int> CreateOwnerAsync(Owner newOwner)
+        {
+            int ownerId = 0;
+
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new 
+                {
+                    OwnerFirstName = newOwner.OwnerFirstName,
+                    OwnerLastName = newOwner.OwnerLastName,
+                    OwnerAddress = newOwner.OwnerAddress,
+                    OwnerCity = newOwner.OwnerCity,
+                    OwnerState = newOwner.OwnerState,
+                    OwnerZip = newOwner.OwnerZip,
+                    OwnerPhone = newOwner.OwnerPhone
+                });
+
+                p.Add("@OwnerId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                await cn.QueryAsync<int>("dbo.SpCreateOwner", p, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                ownerId = p.Get<int>("@OwnerId");
+            }
+
+            return ownerId;
         }
 
         public async Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId)

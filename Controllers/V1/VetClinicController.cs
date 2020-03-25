@@ -43,6 +43,19 @@ namespace VetClinic.Controllers
             return Ok(owners);
         }
 
+        [HttpPost(ApiRoutes.Owners.CreateOwner)]
+        public async Task<IActionResult> CreateOwnerAsync([FromBody] Owner newOwner)
+        {
+            var owner = await _vetClinic.CreateOwnerAsync(newOwner);
+            
+            if(owner == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(owner);
+        }
+
         #endregion
 
         #region Patient

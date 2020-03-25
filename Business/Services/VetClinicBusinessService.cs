@@ -14,6 +14,7 @@ namespace VetClinic.Business
 
         private readonly IVetClinicStore _vetClinicStore;
 
+        #region Owner
         public VetClinicBusinessService(IVetClinicStore vetClinicStore)
         {
             _vetClinicStore = vetClinicStore ?? throw new ArgumentNullException(nameof(vetClinicStore));
@@ -33,6 +34,17 @@ namespace VetClinic.Business
             }
             return owners;
         }
+
+        public async Task<Owner> CreateOwnerAsync(Owner newOwner)
+        {
+            var ownerId = await _vetClinicStore.CreateOwnerAsync(newOwner);
+
+            var owner = await _vetClinicStore.GetOwnerByIdAsync(ownerId);
+
+            return owner;
+        }
+
+        #endregion
 
         public List<Patient> GetAllPatientsAsync()
         {
