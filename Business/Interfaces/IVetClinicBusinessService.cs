@@ -13,5 +13,6 @@ namespace VetClinic.Business
 
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task<Owner> CreateOwnerAsync(Owner newOwner);
+        Task<Owner> PatchOwnerAsync(Owner ownerPatch);
     }
 }

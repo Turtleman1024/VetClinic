@@ -13,5 +13,6 @@ namespace VetClinic.Data.Interfaces
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<int> CreateOwnerAsync(Owner newOwner);
+        Task PatchOwnerAsync(Owner ownerPatch);
     }
 }

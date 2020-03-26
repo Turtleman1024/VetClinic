@@ -33,7 +33,7 @@ namespace VetClinic.Data.MsSqlStore
             var owners = new List<Owner>(); 
             using (SqlConnection cn = await GetConnectionAsync())
             {
-                owners = (await cn.QueryAsync<Owner>("dbo.SpGetOwners", null, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                owners = (await cn.QueryAsync<Owner>("dbo.SpGetOwners", null, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
 
             return owners;
@@ -46,7 +46,7 @@ namespace VetClinic.Data.MsSqlStore
             {
                 var p = new DynamicParameters(new { OwnerId = ownerId });
 
-                owner = (await cn.QueryAsync<Owner>("dbo.SpGetOwnerById", p, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure)).FirstOrDefault();
+                owner = (await cn.QueryAsync<Owner>("dbo.SpGetOwnerById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).FirstOrDefault();
             }
 
             return owner;
@@ -71,11 +71,31 @@ namespace VetClinic.Data.MsSqlStore
 
                 p.Add("@OwnerId", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                await cn.QueryAsync<int>("dbo.SpCreateOwner", p, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure);
+                await cn.QueryAsync<int>("dbo.SpCreateOwner", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
                 ownerId = p.Get<int>("@OwnerId");
             }
 
             return ownerId;
+        }
+
+        public async Task PatchOwnerAsync(Owner ownerPatch)
+        {
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new
+                { 
+                    OwnerId = ownerPatch.OwnerId,
+                    OwnerFirstName = ownerPatch.OwnerFirstName,
+                    OwnerLastName = ownerPatch.OwnerLastName,
+                    OwnerAddress = ownerPatch.OwnerAddress,
+                    OwnerCity = ownerPatch.OwnerCity,
+                    OwnerState = ownerPatch.OwnerState,
+                    OwnerZip = ownerPatch.OwnerZip,
+                    OwnerPhone = ownerPatch.OwnerPhone
+                });
+
+                await cn.ExecuteAsync("dbo.SpUpdateOwner", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public async Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId)
@@ -86,7 +106,7 @@ namespace VetClinic.Data.MsSqlStore
             {
                 var p = new DynamicParameters(new { OwnerId = ownerId });
 
-                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsByOwnerId", p, commandTimeout: 0, commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsByOwnerId", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
             return patients;
         }

@@ -56,6 +56,19 @@ namespace VetClinic.Controllers
             return Ok(owner);
         }
 
+        [HttpPatch(ApiRoutes.Owners.UpdateOwner)]
+        public async Task<IActionResult> UpdateOwnerAsync([FromBody] Owner ownerPatch)
+        {
+            var owner = await _vetClinic.PatchOwnerAsync(ownerPatch);
+
+            if(owner == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(owner);
+        }
+
         #endregion
 
         #region Patient

@@ -35,6 +35,13 @@ namespace VetClinic.Business
             return owners;
         }
 
+        public async Task<Owner> GetOwnerByIdAsync(int ownerId)
+        {
+            var owner = await _vetClinicStore.GetOwnerByIdAsync(ownerId);
+            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
+            return owner;
+        }
+
         public async Task<Owner> CreateOwnerAsync(Owner newOwner)
         {
             var ownerId = await _vetClinicStore.CreateOwnerAsync(newOwner);
@@ -44,18 +51,22 @@ namespace VetClinic.Business
             return owner;
         }
 
+        public async Task<Owner> PatchOwnerAsync(Owner ownerPatch)
+        {
+            await _vetClinicStore.PatchOwnerAsync(ownerPatch);
+
+            var owner = await  _vetClinicStore.GetOwnerByIdAsync(ownerPatch.OwnerId);
+
+            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerPatch.OwnerId);
+
+            return owner;
+        }
+
         #endregion
 
         public List<Patient> GetAllPatientsAsync()
         {
             return _patients;
-        }
-
-        public async Task<Owner> GetOwnerByIdAsync(int ownerId)
-        {
-            var owner = await _vetClinicStore.GetOwnerByIdAsync(ownerId);
-            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
-            return owner;
         }
     }
 }
