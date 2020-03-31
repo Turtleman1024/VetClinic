@@ -18,7 +18,7 @@ namespace VetClinic.Data.MsSqlStore
 
         public VetClinicMsSqlStore(IConfiguration configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
         
         private async Task<SqlConnection> GetConnectionAsync()
