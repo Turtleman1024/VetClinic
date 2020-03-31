@@ -108,7 +108,31 @@ namespace VetClinic.Data.MsSqlStore
 
                 patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsByOwnerId", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
+
             return patients;
+        }
+
+        public async Task<List<Patient>> GetAllPatientsAsync()
+        {
+            var patients = new List<Patient>();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatients", null, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+            }
+            return patients;
+        }
+
+        public async Task<Patient> GetPatientByIdAsync(int patientId)
+        {
+            var patient = new Patient();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { PatientId = patientId });
+
+                patient = (await cn.QueryAsync<Patient>("dbo.SpGetPatientById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).FirstOrDefault();
+            }
+
+            return patient;
         }
     }
 }

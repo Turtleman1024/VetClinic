@@ -23,9 +23,9 @@ namespace VetClinic.Controllers
         public async Task<IActionResult> GetAllOwnersAsync()
         {
             var owners = await _vetClinic.GetAllOwnersAsync();
-            if(owners == null)
+            if(((owners?.Count ?? 0) == 0))
             {
-                return NotFound();
+                return NotFound("Could not find any Owners");
             }
 
             return Ok(owners);
@@ -37,7 +37,7 @@ namespace VetClinic.Controllers
             var owners = await _vetClinic.GetOwnerByIdAsync(ownerId);
             if (owners == null)
             {
-                return NotFound();
+                return NotFound($"Could not find Owner Id: {ownerId}");
             }
 
             return Ok(owners);
@@ -50,7 +50,7 @@ namespace VetClinic.Controllers
             
             if(owner == null)
             {
-                return BadRequest();
+                return BadRequest("Could not Create Owner");
             }
 
             return Ok(owner);
@@ -63,7 +63,7 @@ namespace VetClinic.Controllers
 
             if(owner == null)
             {
-                return BadRequest();
+                return BadRequest($"Could not Patch Owner with Id: {ownerPatch.OwnerId}");
             }
 
             return Ok(owner);
@@ -73,12 +73,36 @@ namespace VetClinic.Controllers
 
         #region Patient
         [HttpGet(ApiRoutes.Patients.GetAllPatients)]
-        public IActionResult GetAllPatients()
+        public async Task<IActionResult> GetAllPatients()
         {
-            var patients = _vetClinic.GetAllPatientsAsync();
-            if(patients == null)
+            var patients = await _vetClinic.GetAllPatientsAsync();
+            if(((patients?.Count ?? 0) == 0))
             {
-                return NotFound();
+                return NotFound("Could not find any Patients");
+            }
+
+            return Ok(patients);
+        }
+
+        [HttpGet(ApiRoutes.Patients.GetPatientById)]
+        public async Task<IActionResult> GetPatientByIdAsync(int patientId)
+        {
+            var patient = await _vetClinic.GetPatientByIdAsync(patientId);
+            if (patient == null)
+            {
+                return NotFound($"Could not find Patients Id: {patientId}");
+            }
+
+            return Ok(patient);
+        }
+
+        [HttpGet(ApiRoutes.Patients.GetPatientByOwnerId)]
+        public async Task<IActionResult> GetPatientsByOwnerIdAsync(int ownerId)
+        {
+            var patients = await _vetClinic.GetPatientsByOwnerIdAsync(ownerId);
+            if ((patients?.Count ?? 0) == 0)
+            {
+                return NotFound($"Could not find Patients for Owner Id: {ownerId}");
             }
 
             return Ok(patients);

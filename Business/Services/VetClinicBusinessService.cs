@@ -10,21 +10,14 @@ namespace VetClinic.Business
 {
     public class VetClinicBusinessService : IVetClinicBusinessService
     {
-        private List<Patient> _patients;
-
         private readonly IVetClinicStore _vetClinicStore;
-
-        #region Owner
+        
         public VetClinicBusinessService(IVetClinicStore vetClinicStore)
         {
             _vetClinicStore = vetClinicStore ?? throw new ArgumentNullException(nameof(vetClinicStore));
-            _patients = new List<Patient>();
-            for (int i = 1; i < 4; i++)
-            {
-                _patients.Add(new Patient { PatientId = i });
-            }
         }
 
+        #region Owner
         public async Task<List<Owner>> GetAllOwnersAsync()
         {
             var owners = await _vetClinicStore.GetAllOwnersAsync();
@@ -38,7 +31,12 @@ namespace VetClinic.Business
         public async Task<Owner> GetOwnerByIdAsync(int ownerId)
         {
             var owner = await _vetClinicStore.GetOwnerByIdAsync(ownerId);
-            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
+            
+            if(owner != null)
+            {
+                owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
+            }
+            
             return owner;
         }
 
@@ -64,9 +62,25 @@ namespace VetClinic.Business
 
         #endregion
 
-        public List<Patient> GetAllPatientsAsync()
+        #region Patient
+        public async Task<List<Patient>> GetAllPatientsAsync()
         {
-            return _patients;
+            var patients = await _vetClinicStore.GetAllPatientsAsync();
+
+            return patients;
         }
+
+        public async Task<Patient> GetPatientByIdAsync(int patientId)
+        {
+            var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
+            return patient;
+        }
+
+        public async Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId)
+        {
+            var patients = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
+            return patients;
+        }
+        #endregion
     }
 }
