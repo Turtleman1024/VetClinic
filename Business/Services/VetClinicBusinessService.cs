@@ -88,6 +88,15 @@ namespace VetClinic.Business
             var patients = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
             return patients;
         }
+
+        public async Task<Patient> CreatePatientAsync(int ownerId, Patient newPatient)
+        {
+            var patientId = await _vetClinicStore.CreatePatientAsync(ownerId, newPatient);
+
+            var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
+
+            return patient;
+        }
         #endregion
     }
 }

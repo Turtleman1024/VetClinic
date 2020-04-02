@@ -147,5 +147,31 @@ namespace VetClinic.Data.MsSqlStore
 
             return patient;
         }
+
+        public async Task<int> CreatePatientAsync(int ownerId, Patient newPatient)
+        {
+            int patientId = 0;
+
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new
+                {
+                    PatientName = newPatient.PatientName,
+                    PatientSpecies = newPatient.PatientSpecies,
+                    PatientGender = newPatient.PatientGender,
+                    PatientBirthDate = newPatient.PatientBirthDate,
+                    PatientNotes = newPatient.PatientNotes,
+                    OwnerId = ownerId
+                });
+
+                p.Add("@PatientId", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                await cn.QueryAsync<int>("dbo.SpCreatePatient", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+                patientId = p.Get<int>("@PatientId");
+            }
+
+            return patientId;
+
+        }
     }
 }

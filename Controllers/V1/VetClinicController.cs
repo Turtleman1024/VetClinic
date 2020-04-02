@@ -110,22 +110,28 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
-        [HttpGet, Route(ApiRoutes.Patients.GetPatientByOwnerId, Name = "GetPatientsByOwnerIdAsync")]
-        public async Task<IActionResult> GetPatientsByOwnerIdAsync(int ownerId)
-        {
-            var patients = await _vetClinic.GetPatientsByOwnerIdAsync(ownerId);
-            if ((patients?.Count ?? 0) == 0)
-            {
-                return NotFound($"Could not find Patients for Owner Id: {ownerId}");
-            }
+        //[HttpGet, Route(ApiRoutes.Patients.GetPatientByOwnerId, Name = "GetPatientsByOwnerIdAsync")]
+        //public async Task<IActionResult> GetPatientsByOwnerIdAsync(int ownerId)
+        //{
+        //    var patients = await _vetClinic.GetPatientsByOwnerIdAsync(ownerId);
+        //    if ((patients?.Count ?? 0) == 0)
+        //    {
+        //        return NotFound($"Could not find Patients for Owner Id: {ownerId}");
+        //    }
 
-            return Ok(patients);
-        }
+        //    return Ok(patients);
+        //}
 
         [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
         public async Task<IActionResult> CreatePatientAsync(int ownerId, [FromBody] Patient newPatient)
         {
-            throw new NotImplementedException();
+            var patient = await _vetClinic.CreatePatientAsync(ownerId, newPatient);
+            if(patient == null)
+            {
+                return BadRequest("Could not Create Patient");
+            }
+
+            return Ok(patient);
         }
 
         [HttpPatch, Route(ApiRoutes.Patients.UpdatePatient, Name = "UpdatePatientAsync")]

@@ -24,7 +24,7 @@ namespace VetClinic.Contracts
         {
             public const string GetAllPatients = Base + "/patients";
             public const string GetPatientById = Base + "/patient/{patientId}";
-            public const string GetPatientByOwnerId = Base + "/patient/{ownerId}";
+            //public const string GetPatientByOwnerId = Base + "/patient/{ownerId}";
             public const string CreatePatient = Base + "/patient";
             public const string UpdatePatient = Base + "/patient";
             public const string DeletePatient = Base + "/patients/{patientId}";
