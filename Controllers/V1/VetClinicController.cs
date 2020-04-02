@@ -150,7 +150,14 @@ namespace VetClinic.Controllers
         [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]
         public async Task<IActionResult> DeletePatientAsync(int patientId)
         {
-            throw new NotImplementedException();
+            var deleted = await _vetClinic.DeletePatientByIdAsync(patientId);
+
+            if(deleted)
+            {
+                return Ok();
+            }
+
+            return NotFound("Patient has already been set to inactive or does not exist");
         }
         #endregion
     }

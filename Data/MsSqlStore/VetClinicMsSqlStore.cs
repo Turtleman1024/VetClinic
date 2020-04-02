@@ -192,5 +192,18 @@ namespace VetClinic.Data.MsSqlStore
                 await cn.ExecuteAsync("dbo.SpUpdatePatient", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public async Task<bool> DeletePatientByIdAsync(int patientId)
+        {
+            var deleted = 0;
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { PatientId = patientId });
+
+                deleted = await cn.ExecuteAsync("dbo.SpDeletePatientById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            }
+
+            return (deleted == 1);
+        }
     }
 }

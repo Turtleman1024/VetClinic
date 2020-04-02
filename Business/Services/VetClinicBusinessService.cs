@@ -106,6 +106,13 @@ namespace VetClinic.Business
 
             return patient;
         }
+
+        public async Task<bool> DeletePatientByIdAsync(int patientId)
+        {
+            var deleted = await _vetClinicStore.DeletePatientByIdAsync(patientId);
+
+            return deleted;
+        }
         #endregion
     }
 }

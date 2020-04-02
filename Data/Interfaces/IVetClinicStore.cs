@@ -19,5 +19,6 @@ namespace VetClinic.Data.Interfaces
         Task<bool> DeleteOwnerByIdAsync(int ownerId);
         Task<int> CreatePatientAsync(int ownerId, Patient newPatient);
         Task UpdatePatientAsync(Patient patientPatch);
+        Task<bool> DeletePatientByIdAsync(int patientId);
     }
 }

@@ -19,5 +19,6 @@ namespace VetClinic.Business
         Task<bool> DeleteOwnerByIdAsync(int ownerId);
         Task<Patient> CreatePatientAsync(int ownerId, Patient newPatient);
         Task<Patient> UpdatePatientAsync(Patient patientPatch);
+        Task<bool> DeletePatientByIdAsync(int patientId);
     }
 }
