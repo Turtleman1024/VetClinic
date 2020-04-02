@@ -16,5 +16,6 @@ namespace VetClinic.Business
         Task<Owner> PatchOwnerAsync(Owner ownerPatch);
         Task<Patient> GetPatientByIdAsync(int patientId);
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
+        Task<bool> DeleteOwnerByIdAsync(int ownerId);
     }
 }

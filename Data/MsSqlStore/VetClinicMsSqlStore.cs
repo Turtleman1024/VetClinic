@@ -98,6 +98,19 @@ namespace VetClinic.Data.MsSqlStore
             }
         }
 
+        public async Task<bool> DeleteOwnerByIdAsync(int ownerId)
+        {
+            var deleted = 0;
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { OwnerId = ownerId });
+
+                deleted = await cn.ExecuteAsync("dbo.SpDeleteOwnerById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            }
+
+            return (deleted == 1);
+        }
+
         public async Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId)
         {
             var patients = new List<Patient>();

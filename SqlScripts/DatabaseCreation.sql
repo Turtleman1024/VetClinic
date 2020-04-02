@@ -10,8 +10,9 @@ CREATE TABLE OwnerInfo
     OwnerAddress   VARCHAR(100)		 NOT NULL,
     OwnerCity      VARCHAR(50)		 NOT NULL,
     OwnerState     CHAR(2)			 NOT NULL,
-    OwnerZip	   INT				NOT NULL,
-    OwnerPhone     VARCHAR(12)		NOT NULL,
+    OwnerZip	   INT				 NOT NULL,
+    OwnerPhone     VARCHAR(12)		 NOT NULL,
+	IsActive	   BIT				 NOT NULL DEFAULT 1, 
     CONSTRAINT OwnerIdPK PRIMARY KEY(OwnerId)
 );
 
@@ -23,8 +24,9 @@ CREATE TABLE PatientInfo
     PatientGender    CHAR(1) NOT NULL CHECK (PatientGender IN ('M', 'F')),
     PatientBirthDate DATE						   NOT NULL, /* YYYY-MM-DD */
     PatientNotes     VARCHAR(2500)				   NULL,
+	IsActive		 BIT						   NOT NULL DEFAULT 1,
     OwnerId			 INT						   NULL,
-    CONSTRAINT OwnerIdFK FOREIGN KEY(OwnerId) REFERENCES OwnerInfo(OwnerId) ON DELETE SET NULL ON UPDATE CASCADE /* This will create a 1-Many relationship with the owner table. */
+    CONSTRAINT OwnerIdFK FOREIGN KEY(OwnerId) REFERENCES OwnerInfo(OwnerId) ON UPDATE CASCADE
 );
 
 /* Insert Owner Information*/

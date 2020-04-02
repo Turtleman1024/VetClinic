@@ -1,17 +1,18 @@
-USE VetClinic
+USE [VetClinic]
 GO
+
 /*************************************************************
 **	<Procedure>
-**	SpGetOwnerById
+**	SpGetOwners
 **
 **	<Purpose>
-**	Get A Owner by the owners Id
+**	Get all active Owners
 **
 **	<History>
 **	<Date>		<Author>	<Reasoning>
 **	03/23/2020	TurtleMan	Initial Creation
 *************************************************************/
-CREATE OR ALTER PROCEDURE SpGetOwnerById( @OwnerId INT)
+CREATE OR ALTER PROCEDURE [dbo].[SpGetOwners]
 AS
  SELECT OwnerId,
 		OwnerFirstName,
@@ -23,5 +24,7 @@ AS
 		OwnerPhone,
 		IsActive
 FROM dbo.vVetClinicOwners
-WHERE OwnerId = @OwnerId;
+WHERE IsActive = 1
+GO
+
 

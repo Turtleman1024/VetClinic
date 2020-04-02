@@ -11,7 +11,7 @@ GO
 **	<Date>		<Author>	<Reasoning>
 **	03/23/2020	TurtleMan	Initial Creation
 *************************************************************/
-CREATE OR ALTER PROCEDURE SpGetPatientsByOwnerId ( @OwnerId INT )
+CREATE OR ALTER PROCEDURE SpGetPatientsByOwnerId (@OwnerId INT )
 AS
  SELECT PatientId,
 		PatientName,
@@ -19,6 +19,7 @@ AS
 		PatientGender,
 		PatientBirthDate,
 		PatientNotes,
-		OwnerId
+		OwnerId,
+		IsActive
 FROM dbo.vVetClinicPatients
 WHERE OwnerId = @OwnerId;

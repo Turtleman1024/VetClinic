@@ -15,6 +15,7 @@ namespace VetClinic.DomainModels
         public string OwnerState { get; set; }
         public int OwnerZip { get; set; }
         public string OwnerPhone { get; set; }
+        public bool IsActive { get; set; }
         public List<Patient> OwnerPets { get; set; }
     }
 }

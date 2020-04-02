@@ -9,5 +9,6 @@ AS
 		PatientGender,
 		PatientBirthDate,
 		PatientNotes,
-		OwnerId
+		OwnerId,
+		IsActive
 FROM dbo.PatientInfo;

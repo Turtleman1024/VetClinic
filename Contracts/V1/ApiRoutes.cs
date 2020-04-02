@@ -17,14 +17,14 @@ namespace VetClinic.Contracts
             public const string GetOwnerById = Base + "/owner/{ownerId}";
             public const string CreateOwner = Base + "/owner";
             public const string UpdateOwner = Base + "/owner";
-            public const string DeleteOwner = Base + "/owner/{ownerId}";
+            public const string DeleteOwner = Base + "/owners/{ownerId}";
         }
 
         public static class Patients
         {
             public const string GetAllPatients = Base + "/patients";
-            public const string GetPatientById = Base + "/patients/{patientId}";
-            public const string GetPatientByOwnerId = Base + "/patients/{ownerId}";
+            public const string GetPatientById = Base + "/patient/{patientId}";
+            public const string GetPatientByOwnerId = Base + "/patient/{ownerId}";
             public const string CreatePatient = Base + "/patient";
             public const string UpdatePatient = Base + "/patient";
             public const string DeletePatient = Base + "/patients/{patientId}";

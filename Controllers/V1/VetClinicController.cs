@@ -19,7 +19,7 @@ namespace VetClinic.Controllers
         }
 
         #region Owner
-        [HttpGet(ApiRoutes.Owners.GetAllOwners)]
+        [HttpGet, Route(ApiRoutes.Owners.GetAllOwners, Name = "GetAllOwnersAsync")]
         public async Task<IActionResult> GetAllOwnersAsync()
         {
             var owners = await _vetClinic.GetAllOwnersAsync();
@@ -31,7 +31,7 @@ namespace VetClinic.Controllers
             return Ok(owners);
         }
 
-        [HttpGet(ApiRoutes.Owners.GetOwnerById)]
+        [HttpGet, Route(ApiRoutes.Owners.GetOwnerById, Name = "GetOwnerByIdAync")]
         public async Task<IActionResult> GetOwnerByIdAync(int ownerId)
         {
             var owners = await _vetClinic.GetOwnerByIdAsync(ownerId);
@@ -43,7 +43,7 @@ namespace VetClinic.Controllers
             return Ok(owners);
         }
 
-        [HttpPost(ApiRoutes.Owners.CreateOwner)]
+        [HttpPost, Route(ApiRoutes.Owners.CreateOwner, Name = "CreateOwnerAsync")]
         public async Task<IActionResult> CreateOwnerAsync([FromBody] Owner newOwner)
         {
             var owner = await _vetClinic.CreateOwnerAsync(newOwner);
@@ -56,7 +56,7 @@ namespace VetClinic.Controllers
             return Ok(owner);
         }
 
-        [HttpPatch(ApiRoutes.Owners.UpdateOwner)]
+        [HttpPatch, Route(ApiRoutes.Owners.UpdateOwner, Name = "UpdateOwnerAsync")]
         public async Task<IActionResult> UpdateOwnerAsync([FromBody] Owner ownerPatch)
         {
             var owner = await _vetClinic.PatchOwnerAsync(ownerPatch);
@@ -69,11 +69,25 @@ namespace VetClinic.Controllers
             return Ok(owner);
         }
 
+        [HttpDelete, Route(ApiRoutes.Owners.DeleteOwner, Name = "DeleteOwnerByIdAsync")]
+        public async Task<IActionResult> DeleteOwnerByIdAsync(int ownerId)
+        {
+            var deleted = await _vetClinic.DeleteOwnerByIdAsync(ownerId);
+
+            if(deleted)
+            {
+                return Ok();
+            }
+
+            return NotFound("Owner has already been set to inactive or does not exist");
+
+        }
+
         #endregion
 
         #region Patient
-        [HttpGet(ApiRoutes.Patients.GetAllPatients)]
-        public async Task<IActionResult> GetAllPatients()
+        [HttpGet, Route(ApiRoutes.Patients.GetAllPatients, Name = "GetAllPatientsAsync")]
+        public async Task<IActionResult> GetAllPatientsAsync()
         {
             var patients = await _vetClinic.GetAllPatientsAsync();
             if(((patients?.Count ?? 0) == 0))
@@ -84,7 +98,7 @@ namespace VetClinic.Controllers
             return Ok(patients);
         }
 
-        [HttpGet(ApiRoutes.Patients.GetPatientById)]
+        [HttpGet, Route(ApiRoutes.Patients.GetPatientById, Name = "GetPatientByIdAsync")]
         public async Task<IActionResult> GetPatientByIdAsync(int patientId)
         {
             var patient = await _vetClinic.GetPatientByIdAsync(patientId);
@@ -96,7 +110,7 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
-        [HttpGet(ApiRoutes.Patients.GetPatientByOwnerId)]
+        [HttpGet, Route(ApiRoutes.Patients.GetPatientByOwnerId, Name = "GetPatientsByOwnerIdAsync")]
         public async Task<IActionResult> GetPatientsByOwnerIdAsync(int ownerId)
         {
             var patients = await _vetClinic.GetPatientsByOwnerIdAsync(ownerId);
@@ -106,6 +120,24 @@ namespace VetClinic.Controllers
             }
 
             return Ok(patients);
+        }
+
+        [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
+        public async Task<IActionResult> CreatePatientAsync(int ownerId, [FromBody] Patient newPatient)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPatch, Route(ApiRoutes.Patients.UpdatePatient, Name = "UpdatePatientAsync")]
+        public async Task<IActionResult> UpdatePatientAsync([FromBody] Patient patient)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]
+        public async Task<IActionResult> DeletePatientAsync(int patientId)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

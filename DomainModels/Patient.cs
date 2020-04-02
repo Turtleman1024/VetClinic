@@ -14,5 +14,6 @@ namespace VetClinic.DomainModels
         public DateTime PatientBirthDate { get; set; }
         public string PatientNotes { get; set; }
         public int OwnerId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -10,5 +10,6 @@ AS
 		OwnerCity,
 		OwnerState,
 		OwnerZip,
-		OwnerPhone
+		OwnerPhone,
+		IsActive
 FROM dbo.OwnerInfo;
