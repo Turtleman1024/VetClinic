@@ -13,10 +13,11 @@ namespace VetClinic.Business
 
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task<Owner> CreateOwnerAsync(Owner newOwner);
-        Task<Owner> PatchOwnerAsync(Owner ownerPatch);
+        Task<Owner> UpdateOwnerAsync(Owner ownerPatch);
         Task<Patient> GetPatientByIdAsync(int patientId);
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<bool> DeleteOwnerByIdAsync(int ownerId);
         Task<Patient> CreatePatientAsync(int ownerId, Patient newPatient);
+        Task<Patient> UpdatePatientAsync(Patient patientPatch);
     }
 }

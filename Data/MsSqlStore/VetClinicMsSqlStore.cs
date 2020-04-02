@@ -78,7 +78,7 @@ namespace VetClinic.Data.MsSqlStore
             return ownerId;
         }
 
-        public async Task PatchOwnerAsync(Owner ownerPatch)
+        public async Task UpdateOwnerAsync(Owner ownerPatch)
         {
             using (SqlConnection cn = await GetConnectionAsync())
             {
@@ -172,6 +172,25 @@ namespace VetClinic.Data.MsSqlStore
 
             return patientId;
 
+        }
+
+        public async Task UpdatePatientAsync(Patient patientPatch)
+        {
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new
+                {
+                    PatientId = patientPatch.PatientId,
+                    PatientName = patientPatch.PatientName,
+                    PatientSpecies = patientPatch.PatientSpecies,
+                    PatientGender = patientPatch.PatientGender,
+                    PatientBirthDate = patientPatch.PatientBirthDate,
+                    PatientNotes = patientPatch.PatientNotes,
+                    OwnerId = patientPatch.OwnerId
+                });
+
+                await cn.ExecuteAsync("dbo.SpUpdatePatient", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            }
         }
     }
 }

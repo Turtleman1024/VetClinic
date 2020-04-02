@@ -49,9 +49,9 @@ namespace VetClinic.Business
             return owner;
         }
 
-        public async Task<Owner> PatchOwnerAsync(Owner ownerPatch)
+        public async Task<Owner> UpdateOwnerAsync(Owner ownerPatch)
         {
-            await _vetClinicStore.PatchOwnerAsync(ownerPatch);
+            await _vetClinicStore.UpdateOwnerAsync(ownerPatch);
 
             var owner = await  _vetClinicStore.GetOwnerByIdAsync(ownerPatch.OwnerId);
 
@@ -94,6 +94,15 @@ namespace VetClinic.Business
             var patientId = await _vetClinicStore.CreatePatientAsync(ownerId, newPatient);
 
             var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
+
+            return patient;
+        }
+
+        public async Task<Patient> UpdatePatientAsync(Patient patientPatch)
+        {
+            await _vetClinicStore.UpdatePatientAsync(patientPatch);
+
+            var patient = await _vetClinicStore.GetPatientByIdAsync(patientPatch.PatientId);
 
             return patient;
         }

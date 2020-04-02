@@ -59,7 +59,7 @@ namespace VetClinic.Controllers
         [HttpPatch, Route(ApiRoutes.Owners.UpdateOwner, Name = "UpdateOwnerAsync")]
         public async Task<IActionResult> UpdateOwnerAsync([FromBody] Owner ownerPatch)
         {
-            var owner = await _vetClinic.PatchOwnerAsync(ownerPatch);
+            var owner = await _vetClinic.UpdateOwnerAsync(ownerPatch);
 
             if(owner == null)
             {
@@ -135,9 +135,16 @@ namespace VetClinic.Controllers
         }
 
         [HttpPatch, Route(ApiRoutes.Patients.UpdatePatient, Name = "UpdatePatientAsync")]
-        public async Task<IActionResult> UpdatePatientAsync([FromBody] Patient patient)
+        public async Task<IActionResult> UpdatePatientAsync([FromBody] Patient patientPatch)
         {
-            throw new NotImplementedException();
+            var patient = await _vetClinic.UpdatePatientAsync(patientPatch);
+
+            if(patient == null)
+            {
+                return BadRequest($"Could not Patch Patient with Id: {patient.PatientId}");
+            }
+
+            return Ok(patient);
         }
 
         [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]
