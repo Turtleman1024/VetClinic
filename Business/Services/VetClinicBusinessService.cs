@@ -40,6 +40,20 @@ namespace VetClinic.Business
             return owner;
         }
 
+        public async Task<List<Owner>> GetOwnersByLastNameAsync(string lastName)
+        {
+            var owners = await _vetClinicStore.GetOwnersByLastNameAsync(lastName);
+
+            if(((owners?.Count ?? 0) != 0))
+            {
+                foreach (var owner in owners)
+                {
+                    owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(owner.OwnerId);
+                }
+            }
+            return owners;
+        }
+
         public async Task<Owner> CreateOwnerAsync(Owner newOwner)
         {
             var ownerId = await _vetClinicStore.CreateOwnerAsync(newOwner);
@@ -81,6 +95,13 @@ namespace VetClinic.Business
         {
             var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
             return patient;
+        }
+
+        public async Task<List<Patient>> GetPatientsByLastNameAsync(string name)
+        {
+            var patients = await _vetClinicStore.GetPatientsByLastNameAsync(name);
+
+            return patients;
         }
 
         public async Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId)

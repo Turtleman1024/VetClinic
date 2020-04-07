@@ -34,14 +34,27 @@ namespace VetClinic.Controllers
         [HttpGet, Route(ApiRoutes.Owners.GetOwnerById, Name = "GetOwnerByIdAync")]
         public async Task<IActionResult> GetOwnerByIdAync(int ownerId)
         {
-            var owners = await _vetClinic.GetOwnerByIdAsync(ownerId);
-            if (owners == null)
+            var owner = await _vetClinic.GetOwnerByIdAsync(ownerId);
+            if (owner == null)
             {
                 return NotFound($"Could not find Owner Id: {ownerId}");
             }
 
+            return Ok(owner);
+        }
+
+        [HttpGet, Route(ApiRoutes.Owners.GetOwnersByLastName, Name = "GetOwnersByLastNameAync")]
+        public async Task<IActionResult> GetOwnersByLastNameAync(string lastName)
+        {
+            var owners = await _vetClinic.GetOwnersByLastNameAsync(lastName);
+            if (owners == null)
+            {
+                return NotFound($"Could not find Owner with last name: {lastName}");
+            }
+
             return Ok(owners);
         }
+
 
         [HttpPost, Route(ApiRoutes.Owners.CreateOwner, Name = "CreateOwnerAsync")]
         public async Task<IActionResult> CreateOwnerAsync([FromBody] Owner newOwner)
@@ -110,17 +123,17 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
-        //[HttpGet, Route(ApiRoutes.Patients.GetPatientByOwnerId, Name = "GetPatientsByOwnerIdAsync")]
-        //public async Task<IActionResult> GetPatientsByOwnerIdAsync(int ownerId)
-        //{
-        //    var patients = await _vetClinic.GetPatientsByOwnerIdAsync(ownerId);
-        //    if ((patients?.Count ?? 0) == 0)
-        //    {
-        //        return NotFound($"Could not find Patients for Owner Id: {ownerId}");
-        //    }
+        [HttpGet, Route(ApiRoutes.Patients.GetPatientByName, Name = "GetPatientsByLastNameAync")]
+        public async Task<IActionResult> GetPatientsByLastNameAync(string name)
+        {
+            var patients = await _vetClinic.GetPatientsByLastNameAsync(name);
+            if (patients == null)
+            {
+                return NotFound($"Could not find Patient with name: {name}");
+            }
 
-        //    return Ok(patients);
-        //}
+            return Ok(patients);
+        }
 
         [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
         public async Task<IActionResult> CreatePatientAsync(int ownerId, [FromBody] Patient newPatient)

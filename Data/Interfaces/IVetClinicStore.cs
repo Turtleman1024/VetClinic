@@ -11,14 +11,17 @@ namespace VetClinic.Data.Interfaces
     {
         Task<List<Owner>> GetAllOwnersAsync();
         Task<Owner> GetOwnerByIdAsync(int ownerId);
-        Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<int> CreateOwnerAsync(Owner newOwner);
         Task UpdateOwnerAsync(Owner ownerPatch);
+        Task<bool> DeleteOwnerByIdAsync(int ownerId);
+        Task<List<Owner>> GetOwnersByLastNameAsync(string lastName);
+
         Task<List<Patient>> GetAllPatientsAsync();
         Task<Patient> GetPatientByIdAsync(int patientId);
-        Task<bool> DeleteOwnerByIdAsync(int ownerId);
+        Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<int> CreatePatientAsync(int ownerId, Patient newPatient);
         Task UpdatePatientAsync(Patient patientPatch);
         Task<bool> DeletePatientByIdAsync(int patientId);
+        Task<List<Patient>> GetPatientsByLastNameAsync(string name);
     }
 }

@@ -52,6 +52,17 @@ namespace VetClinic.Data.MsSqlStore
             return owner;
         }
 
+        public async Task<List<Owner>> GetOwnersByLastNameAsync(string lastName)
+        {
+            var owners = new List<Owner>();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { OwnersLastName = lastName});
+                owners = (await cn.QueryAsync<Owner>("dbo.SpGetOwnersByLastName", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+            }
+            return owners;
+        }
+
         public async Task<int> CreateOwnerAsync(Owner newOwner)
         {
             int ownerId = 0;
@@ -146,6 +157,17 @@ namespace VetClinic.Data.MsSqlStore
             }
 
             return patient;
+        }
+
+        public async Task<List<Patient>> GetPatientsByLastNameAsync(string name)
+        {
+            var patients = new List<Patient>();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { PatientName = name });
+                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsByLastName", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+            }
+            return patients;
         }
 
         public async Task<int> CreatePatientAsync(int ownerId, Patient newPatient)
