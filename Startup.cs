@@ -22,6 +22,8 @@ namespace VetClinic
 {
     public class Startup
     {
+        readonly string VetClinicAllowSpecificOrigins = "_vetClinicAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -44,6 +46,17 @@ namespace VetClinic
 
             services.AddTransient<IVetClinicBusinessService, VetClinicBusinessService>();
             services.AddTransient<IVetClinicStore, VetClinicMsSqlStore>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: VetClinicAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
 
             services.AddControllers();
         }
@@ -72,6 +85,8 @@ namespace VetClinic
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(VetClinicAllowSpecificOrigins);
 
             app.UseAuthorization();
 
