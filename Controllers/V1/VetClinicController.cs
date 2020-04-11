@@ -123,7 +123,7 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
-        [HttpGet, Route(ApiRoutes.Patients.GetPatientByName, Name = "GetPatientsByLastNameAync")]
+        [HttpGet, Route(ApiRoutes.Patients.GetPatientsByName, Name = "GetPatientsByLastNameAync")]
         public async Task<IActionResult> GetPatientsByLastNameAync(string name)
         {
             var patients = await _vetClinic.GetPatientsByLastNameAsync(name);
