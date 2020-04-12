@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,16 +71,19 @@ namespace VetClinic.Controllers
         }
 
         [HttpPatch, Route(ApiRoutes.Owners.UpdateOwner, Name = "UpdateOwnerAsync")]
-        public async Task<IActionResult> UpdateOwnerAsync([FromBody] Owner ownerPatch)
+        public async Task<IActionResult> UpdateOwnerAsync(int ownerId, [FromBody] JsonPatchDocument<Owner> ownerPatch)
         {
-            var owner = await _vetClinic.UpdateOwnerAsync(ownerPatch);
-
-            if(owner == null)
+            if(ownerPatch?.Operations?.Count > 0)
             {
-                return BadRequest($"Could not Patch Owner with Id: {ownerPatch.OwnerId}");
+                var owner = await _vetClinic.UpdateOwnerAsync(ownerId, ownerPatch);
+                if(owner != null)
+                {
+                    return Ok(owner);
+                }
+                return BadRequest($"Could not Patch Owner with Id: {ownerId}");
             }
-
-            return Ok(owner);
+            
+            return BadRequest($"Could not Patch Owner with Id: {ownerId}");
         }
 
         [HttpDelete, Route(ApiRoutes.Owners.DeleteOwner, Name = "DeleteOwnerByIdAsync")]
@@ -148,16 +152,20 @@ namespace VetClinic.Controllers
         }
 
         [HttpPatch, Route(ApiRoutes.Patients.UpdatePatient, Name = "UpdatePatientAsync")]
-        public async Task<IActionResult> UpdatePatientAsync([FromBody] Patient patientPatch)
+        [ProducesResponseType(typeof(Patient), 200)]
+        public async Task<IActionResult> UpdatePatientAsync(int patientId, [FromBody] JsonPatchDocument<Patient> patientPatch)
         {
-            var patient = await _vetClinic.UpdatePatientAsync(patientPatch);
-
-            if(patient == null)
+            if (patientPatch?.Operations?.Count > 0)
             {
-                return BadRequest($"Could not Patch Patient with Id: {patient.PatientId}");
+                var patient = await _vetClinic.UpdatePatientAsync(patientId, patientPatch);
+                if(patient != null)
+                {
+                    return Ok(patient);
+                }
+                return BadRequest($"Could not Patch Patient with Id: {patientId}");
             }
 
-            return Ok(patient);
+            return BadRequest($"Could not Patch Patient with Id: {patientId}");
         }
 
         [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]

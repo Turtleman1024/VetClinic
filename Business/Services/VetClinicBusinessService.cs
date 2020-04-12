@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -63,13 +64,22 @@ namespace VetClinic.Business
             return owner;
         }
 
-        public async Task<Owner> UpdateOwnerAsync(Owner ownerPatch)
+        public async Task<Owner> UpdateOwnerAsync(int ownerId, JsonPatchDocument<Owner> ownerPatch)
         {
-            await _vetClinicStore.UpdateOwnerAsync(ownerPatch);
+            var owner = await _vetClinicStore.GetOwnerByIdAsync(ownerId);
 
-            var owner = await  _vetClinicStore.GetOwnerByIdAsync(ownerPatch.OwnerId);
+            if(owner == null)
+            {
+                return owner;
+            }
 
-            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerPatch.OwnerId);
+            ownerPatch.ApplyTo(owner);
+
+            await _vetClinicStore.UpdateOwnerAsync(owner);
+
+            owner = await  _vetClinicStore.GetOwnerByIdAsync(ownerId);
+
+            owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(ownerId);
 
             return owner;
         }
@@ -119,11 +129,20 @@ namespace VetClinic.Business
             return patient;
         }
 
-        public async Task<Patient> UpdatePatientAsync(Patient patientPatch)
+        public async Task<Patient> UpdatePatientAsync(int patientId, JsonPatchDocument<Patient> patientPatch)
         {
-            await _vetClinicStore.UpdatePatientAsync(patientPatch);
+            var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
 
-            var patient = await _vetClinicStore.GetPatientByIdAsync(patientPatch.PatientId);
+            if (patient == null)
+            {
+                return patient;
+            }
+
+            patientPatch.ApplyTo(patient);
+
+            await _vetClinicStore.UpdatePatientAsync(patient);
+
+            patient = await _vetClinicStore.GetPatientByIdAsync(patientId);            
 
             return patient;
         }

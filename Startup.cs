@@ -34,11 +34,6 @@ namespace VetClinic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContextPool<AppDbContext>(options =>
-            //{
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            //});
-
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "Turtleman's Vet Clinic", Version = "v1" });
@@ -58,7 +53,8 @@ namespace VetClinic
                                   });
             });
 
-            services.AddControllers();
+            //AddNewtonsoftJson to enable patch
+            services.AddControllers().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
