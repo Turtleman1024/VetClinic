@@ -22,5 +22,4 @@ AS
 		OwnerId,
 		IsActive
 FROM dbo.vVetClinicPatients
-WHERE OwnerId = @OwnerId AND
-	  IsActive = 1;
+WHERE OwnerId = @OwnerId;
