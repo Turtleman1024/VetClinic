@@ -20,6 +20,10 @@ namespace VetClinic.Controllers
         }
 
         #region Owner
+        /// <summary>
+        /// Asynchronously get all active owners
+        /// </summary>
+        /// <returns>List of active owners</returns>
         [HttpGet, Route(ApiRoutes.Owners.GetAllOwners, Name = "GetAllOwnersAsync")]
         public async Task<IActionResult> GetAllOwnersAsync()
         {
@@ -32,6 +36,11 @@ namespace VetClinic.Controllers
             return Ok(owners);
         }
 
+        /// <summary>
+        /// Asynchronously get owner by id
+        /// </summary>
+        /// <param name="ownerId">The owner id</param>
+        /// <returns>The owner</returns>
         [HttpGet, Route(ApiRoutes.Owners.GetOwnerById, Name = "GetOwnerByIdAync")]
         public async Task<IActionResult> GetOwnerByIdAync(int ownerId)
         {
@@ -44,6 +53,11 @@ namespace VetClinic.Controllers
             return Ok(owner);
         }
 
+        /// <summary>
+        /// Asynchronously search for owners by last name
+        /// </summary>
+        /// <param name="lastName">Last Name to search for</param>
+        /// <returns>List of owners</returns>
         [HttpGet, Route(ApiRoutes.Owners.GetOwnersByLastName, Name = "GetOwnersByLastNameAync")]
         public async Task<IActionResult> GetOwnersByLastNameAync(string lastName)
         {
@@ -56,7 +70,12 @@ namespace VetClinic.Controllers
             return Ok(owners);
         }
 
-
+        /// <summary>
+        /// Asynchronously create a new owner
+        /// NOTE: Think this workflow will have to be change 
+        /// </summary>
+        /// <param name="newOwner">The new owner</param>
+        /// <returns>The created owner </returns>
         [HttpPost, Route(ApiRoutes.Owners.CreateOwner, Name = "CreateOwnerAsync")]
         public async Task<IActionResult> CreateOwnerAsync([FromBody] Owner newOwner)
         {
@@ -70,6 +89,12 @@ namespace VetClinic.Controllers
             return Ok(owner);
         }
 
+        /// <summary>
+        /// Asynchronously update owner information
+        /// </summary>
+        /// <param name="ownerId">The current owner Id</param>
+        /// <param name="ownerPatch">The field to patch</param>
+        /// <returns>The patched owner</returns>
         [HttpPatch, Route(ApiRoutes.Owners.UpdateOwner, Name = "UpdateOwnerAsync")]
         public async Task<IActionResult> UpdateOwnerAsync(int ownerId, [FromBody] JsonPatchDocument<Owner> ownerPatch)
         {
@@ -86,6 +111,10 @@ namespace VetClinic.Controllers
             return BadRequest($"Could not Patch Owner with Id: {ownerId}");
         }
 
+        /// <summary>
+        /// Asynchronously set a owner to inactive
+        /// </summary>
+        /// <param name="ownerId">The current owner id</param>
         [HttpDelete, Route(ApiRoutes.Owners.DeleteOwner, Name = "DeleteOwnerByIdAsync")]
         public async Task<IActionResult> DeleteOwnerByIdAsync(int ownerId)
         {
@@ -103,6 +132,10 @@ namespace VetClinic.Controllers
         #endregion
 
         #region Patient
+        /// <summary>
+        /// Asynchronously get all patients
+        /// </summary>
+        /// <returns>List of patients</returns>
         [HttpGet, Route(ApiRoutes.Patients.GetAllPatients, Name = "GetAllPatientsAsync")]
         public async Task<IActionResult> GetAllPatientsAsync()
         {
@@ -115,6 +148,11 @@ namespace VetClinic.Controllers
             return Ok(patients);
         }
 
+        /// <summary>
+        /// Asynchronously get patient by id
+        /// </summary>
+        /// <param name="patientId">The patient id</param>
+        /// <returns>The current patient</returns>
         [HttpGet, Route(ApiRoutes.Patients.GetPatientById, Name = "GetPatientByIdAsync")]
         public async Task<IActionResult> GetPatientByIdAsync(int patientId)
         {
@@ -139,10 +177,17 @@ namespace VetClinic.Controllers
             return Ok(patients);
         }
 
+        /// <summary>
+        /// Asynchronously create a new patient
+        /// NOTE: Think this workflow will have to be changed
+        /// </summary>
+        /// <param name="ownerId">The </param>
+        /// <param name="newPatient"></param>
+        /// <returns>The newly created patient</returns>
         [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
-        public async Task<IActionResult> CreatePatientAsync(int ownerId, [FromBody] Patient newPatient)
+        public async Task<IActionResult> CreatePatientAsync(int patientId, [FromBody] Patient newPatient)
         {
-            var patient = await _vetClinic.CreatePatientAsync(ownerId, newPatient);
+            var patient = await _vetClinic.CreatePatientAsync(patientId, newPatient);
             if(patient == null)
             {
                 return BadRequest("Could not Create Patient");
@@ -151,6 +196,12 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
+        /// <summary>
+        /// Asynchronously update patient information
+        /// </summary>
+        /// <param name="patientId">The current patient id</param>
+        /// <param name="patientPatch">The field to patch</param>
+        /// <returns>The patched patient</returns>
         [HttpPatch, Route(ApiRoutes.Patients.UpdatePatient, Name = "UpdatePatientAsync")]
         [ProducesResponseType(typeof(Patient), 200)]
         public async Task<IActionResult> UpdatePatientAsync(int patientId, [FromBody] JsonPatchDocument<Patient> patientPatch)
@@ -168,6 +219,11 @@ namespace VetClinic.Controllers
             return BadRequest($"Could not Patch Patient with Id: {patientId}");
         }
 
+        /// <summary>
+        /// Asynchronously set a patient to inactive
+        /// NOTE: Future will need to figure out business logic of how to handle deceased pets information
+        /// </summary>
+        /// <param name="patientId">The patient Id</param>
         [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]
         public async Task<IActionResult> DeletePatientAsync(int patientId)
         {

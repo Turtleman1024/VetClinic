@@ -120,11 +120,11 @@ namespace VetClinic.Business
             return patients;
         }
 
-        public async Task<Patient> CreatePatientAsync(int ownerId, Patient newPatient)
+        public async Task<Patient> CreatePatientAsync(int patientId, Patient newPatient)
         {
-            var patientId = await _vetClinicStore.CreatePatientAsync(ownerId, newPatient);
+            var createdPatientid = await _vetClinicStore.CreatePatientAsync(patientId, newPatient);
 
-            var patient = await _vetClinicStore.GetPatientByIdAsync(patientId);
+            var patient = await _vetClinicStore.GetPatientByIdAsync(createdPatientid);
 
             return patient;
         }
