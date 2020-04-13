@@ -6,7 +6,10 @@ GO
 **	SpDeleteOwnerById
 **
 **	<Purpose>
-**	Sets a owner to inactive
+**  We never delete a Owner we only set them and thier pets to inactive
+**  This way we keep records for future reporting or if the owner 
+**	becomes a client again
+**	
 **
 **	<History>
 **	<Date>		<Author>	<Reasoning>
@@ -18,7 +21,11 @@ BEGIN
 	 UPDATE dbo.OwnerInfo
 		SET IsActive = 0
 	 WHERE OwnerId = @OwnerId AND
-	 IsActive = 1
+	 IsActive = 1;
+
+	 UPDATE dbo.PatientInfo
+		SET IsActive = 0
+		WHERE OwnerId = @OwnerId;
 END;
 GO
 
