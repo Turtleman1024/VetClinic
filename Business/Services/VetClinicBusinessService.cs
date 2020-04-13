@@ -107,9 +107,9 @@ namespace VetClinic.Business
             return patient;
         }
 
-        public async Task<List<Patient>> GetPatientsByLastNameAsync(string name)
+        public async Task<List<Patient>> GetPatientsNameAsync(string name)
         {
-            var patients = await _vetClinicStore.GetPatientsByLastNameAsync(name);
+            var patients = await _vetClinicStore.GetPatientsNameAsync(name);
 
             return patients;
         }

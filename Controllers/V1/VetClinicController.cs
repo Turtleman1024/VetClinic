@@ -128,9 +128,9 @@ namespace VetClinic.Controllers
         }
 
         [HttpGet, Route(ApiRoutes.Patients.GetPatientsByName, Name = "GetPatientsByLastNameAync")]
-        public async Task<IActionResult> GetPatientsByLastNameAync(string name)
+        public async Task<IActionResult> GetPatientsNameAync(string name)
         {
-            var patients = await _vetClinic.GetPatientsByLastNameAsync(name);
+            var patients = await _vetClinic.GetPatientsNameAsync(name);
             if (patients == null)
             {
                 return NotFound($"Could not find Patient with name: {name}");

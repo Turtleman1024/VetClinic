@@ -159,13 +159,13 @@ namespace VetClinic.Data.MsSqlStore
             return patient;
         }
 
-        public async Task<List<Patient>> GetPatientsByLastNameAsync(string name)
+        public async Task<List<Patient>> GetPatientsNameAsync(string name)
         {
             var patients = new List<Patient>();
             using (SqlConnection cn = await GetConnectionAsync())
             {
                 var p = new DynamicParameters(new { PatientName = name });
-                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsByLastName", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+                patients = (await cn.QueryAsync<Patient>("dbo.SpGetPatientsName", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
             return patients;
         }
