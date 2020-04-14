@@ -24,6 +24,7 @@ namespace VetClinic.Contracts
         public static class Patients
         {
             public const string GetAllPatients = Base + "/patients";
+            public const string GetActivePatients = Base + "/patients/active";
             public const string GetPatientById = Base + "/patient/id/{patientId}";
             public const string GetPatientsByName = Base + "/patient/name/{name}";
             public const string CreatePatient = Base + "/patient";

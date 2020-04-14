@@ -53,6 +53,22 @@ namespace VetClinic.Controllers
             return Ok(patient);
         }
 
+        /// <summary>
+        /// Asynchronously get all active patients
+        /// </summary>
+        /// <returns>List of active patients</returns>
+        [HttpGet, Route(ApiRoutes.Patients.GetActivePatients, Name = "GetActivePatientsAsync")]
+        public async Task<IActionResult> GetActivePatientsAsync()
+        {
+            var activePatients = await _vetClinic.GetActivePatientsAsync();
+            if(((activePatients?.Count ?? 0) == 0))
+            {
+                return NotFound("Could not find any Active Patients");
+            }
+
+            return Ok(activePatients);
+        }
+
         [HttpGet, Route(ApiRoutes.Patients.GetPatientsByName, Name = "GetPatientsByLastNameAync")]
         public async Task<IActionResult> GetPatientsNameAync(string name)
         {

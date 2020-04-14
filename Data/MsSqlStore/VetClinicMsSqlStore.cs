@@ -146,6 +146,16 @@ namespace VetClinic.Data.MsSqlStore
             return patients;
         }
 
+        public async Task<List<Patient>> GetActivePatientsAsync()
+        {
+            var patients = new List<Patient>();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                patients = (await cn.QueryAsync<Patient>("dbo.SpGetActivePatients", null, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+            }
+            return patients;
+        }
+
         public async Task<Patient> GetPatientByIdAsync(int patientId)
         {
             var patient = new Patient();
