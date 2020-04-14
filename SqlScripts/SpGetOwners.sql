@@ -24,7 +24,6 @@ AS
 		OwnerPhone,
 		IsActive
 FROM dbo.vVetClinicOwners
-WHERE IsActive = 1
 GO
 
 
