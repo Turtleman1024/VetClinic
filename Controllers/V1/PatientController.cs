@@ -69,7 +69,12 @@ namespace VetClinic.Controllers
             return Ok(activePatients);
         }
 
-        [HttpGet, Route(ApiRoutes.Patients.GetPatientsByName, Name = "GetPatientsByLastNameAync")]
+        /// <summary>
+        /// Asynchronously get Patients by name
+        /// </summary>
+        /// <param name="name">Patient Name to search for</param>
+        /// <returns>List of Patients</returns>
+        [HttpGet, Route(ApiRoutes.Patients.GetPatientsByName, Name = "GetPatientsNameAync")]
         public async Task<IActionResult> GetPatientsNameAync(string name)
         {
             var patients = await _vetClinic.GetPatientsNameAsync(name);
