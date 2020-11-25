@@ -19,6 +19,7 @@ namespace VetClinic.Contracts
             public const string CreateOwner = Base + "/owner";
             public const string UpdateOwner = Base + "/owner/{ownerId}";
             public const string DeleteOwner = Base + "/owner/remove/{ownerId}";
+            public const string SearchByOwnerPhoneNumber = Base + "/owner/search-phone/{phoneNumber}";
         }
 
         public static class Patients

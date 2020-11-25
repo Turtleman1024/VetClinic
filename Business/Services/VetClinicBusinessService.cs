@@ -55,6 +55,11 @@ namespace VetClinic.Business
             return owners;
         }
 
+        public async Task<List<Owner>> GetOwnersByPhoneNumber(string phoneNumber)
+        {
+            return await _vetClinicStore.GetOwnersByPhoneNumberAsync(phoneNumber);
+        }
+
         public async Task<Owner> CreateOwnerAsync(Owner newOwner)
         {
             var ownerId = await _vetClinicStore.CreateOwnerAsync(newOwner);

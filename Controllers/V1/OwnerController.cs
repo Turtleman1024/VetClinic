@@ -74,6 +74,23 @@ namespace VetClinic.Controllers.V1
         }
 
         /// <summary>
+        /// Asynchronously search for owners by phone number
+        /// </summary>
+        /// <param name="lastName">Phone number to search for</param>
+        /// <returns>List of owners</returns>
+        [HttpGet, Route(ApiRoutes.Owners.SearchByOwnerPhoneNumber, Name = "SearchByOwnerPhoneNumberAync")]
+        public async Task<IActionResult> SearchByOwnerPhoneNumberAync(string phoneNumber)
+        {
+            var owners = await _vetClinic.GetOwnersByPhoneNumber(phoneNumber);
+            if (owners == null)
+            {
+                return NotFound($"Could not find Owner with last name: {phoneNumber}");
+            }
+
+            return Ok(owners);
+        }
+
+        /// <summary>
         /// Asynchronously create a new owner
         /// NOTE: Think this workflow will have to be change 
         /// </summary>

@@ -63,6 +63,17 @@ namespace VetClinic.Data.MsSqlStore
             return owners;
         }
 
+        public async Task<List<Owner>> GetOwnersByPhoneNumberAsync(string phoneNumber)
+        {
+            var owners = new List<Owner>();
+            using (SqlConnection cn = await GetConnectionAsync())
+            {
+                var p = new DynamicParameters(new { SearchValue = phoneNumber });
+                owners = (await cn.QueryAsync<Owner>("dbo.SpSearchByOwnerPhoneNumber", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+            }
+            return owners;
+        }
+
         public async Task<int> CreateOwnerAsync(Owner newOwner)
         {
             int ownerId = 0;
