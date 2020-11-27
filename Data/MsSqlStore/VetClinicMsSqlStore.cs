@@ -52,24 +52,13 @@ namespace VetClinic.Data.MsSqlStore
             return owner;
         }
 
-        public async Task<List<Owner>> GetOwnersByLastNameAsync(string lastName)
+        public async Task<List<Owner>> SearchForOwnerAsync(string searchValue)
         {
             var owners = new List<Owner>();
             using (SqlConnection cn = await GetConnectionAsync())
             {
-                var p = new DynamicParameters(new { OwnersLastName = lastName});
-                owners = (await cn.QueryAsync<Owner>("dbo.SpGetOwnersByLastName", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
-            }
-            return owners;
-        }
-
-        public async Task<List<Owner>> GetOwnersByPhoneNumberAsync(string phoneNumber)
-        {
-            var owners = new List<Owner>();
-            using (SqlConnection cn = await GetConnectionAsync())
-            {
-                var p = new DynamicParameters(new { SearchValue = phoneNumber });
-                owners = (await cn.QueryAsync<Owner>("dbo.SpSearchByOwnerPhoneNumber", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
+                var p = new DynamicParameters(new { SearchValue = searchValue });
+                owners = (await cn.QueryAsync<Owner>("dbo.SpSearchForOwner", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
             return owners;
         }

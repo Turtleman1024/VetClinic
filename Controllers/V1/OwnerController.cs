@@ -57,34 +57,17 @@ namespace VetClinic.Controllers.V1
         }
 
         /// <summary>
-        /// Asynchronously search for owners by last name
+        /// Asynchronously search for owner
         /// </summary>
-        /// <param name="lastName">Last Name to search for</param>
+        /// <param name="lastName">Search Value</param>
         /// <returns>List of owners</returns>
-        [HttpGet, Route(ApiRoutes.Owners.GetOwnersByLastName, Name = "GetOwnersByLastNameAync")]
-        public async Task<IActionResult> GetOwnersByLastNameAync(string lastName)
+        [HttpGet, Route(ApiRoutes.Owners.SearchForOwner, Name = "SearchForOwnerAync")]
+        public async Task<IActionResult> SearchForOwnerAync(string searchValue)
         {
-            var owners = await _vetClinic.GetOwnersByLastNameAsync(lastName);
+            var owners = await _vetClinic.SearchForOwnerAsync(searchValue);
             if (owners == null)
             {
-                return NotFound($"Could not find Owner with last name: {lastName}");
-            }
-
-            return Ok(owners);
-        }
-
-        /// <summary>
-        /// Asynchronously search for owners by phone number
-        /// </summary>
-        /// <param name="lastName">Phone number to search for</param>
-        /// <returns>List of owners</returns>
-        [HttpGet, Route(ApiRoutes.Owners.SearchByOwnerPhoneNumber, Name = "SearchByOwnerPhoneNumberAync")]
-        public async Task<IActionResult> SearchByOwnerPhoneNumberAync(string phoneNumber)
-        {
-            var owners = await _vetClinic.GetOwnersByPhoneNumber(phoneNumber);
-            if (owners == null)
-            {
-                return NotFound($"Could not find Owner with last name: {phoneNumber}");
+                return NotFound($"Could not find Owner.");
             }
 
             return Ok(owners);

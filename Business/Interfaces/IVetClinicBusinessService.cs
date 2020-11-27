@@ -14,8 +14,7 @@ namespace VetClinic.Business
 
         Task<Owner> GetOwnerByIdAsync(int ownerId);
         Task<Owner> CreateOwnerAsync(Owner newOwner);
-        Task<List<Owner>> GetOwnersByLastNameAsync(string lastName);
-        Task<List<Owner>> GetOwnersByPhoneNumber(string phoneNumber);
+        Task<List<Owner>> SearchForOwnerAsync(string phoneNumber);
         Task<Owner> UpdateOwnerAsync(int ownerId, JsonPatchDocument<Owner> ownerPatch);
         Task<bool> DeleteOwnerByIdAsync(int ownerId);
 

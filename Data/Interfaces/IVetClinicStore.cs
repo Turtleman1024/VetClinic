@@ -14,8 +14,7 @@ namespace VetClinic.Data.Interfaces
         Task<int> CreateOwnerAsync(Owner newOwner);
         Task UpdateOwnerAsync(Owner ownerPatch);
         Task<bool> DeleteOwnerByIdAsync(int ownerId);
-        Task<List<Owner>> GetOwnersByLastNameAsync(string lastName);
-        Task<List<Owner>> GetOwnersByPhoneNumberAsync(string phoneNumber);
+        Task<List<Owner>> SearchForOwnerAsync(string seaerchValue);
 
         Task<List<Patient>> GetAllPatientsAsync();
         Task<Patient> GetPatientByIdAsync(int patientId);

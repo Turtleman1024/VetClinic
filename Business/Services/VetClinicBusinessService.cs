@@ -41,23 +41,19 @@ namespace VetClinic.Business
             return owner;
         }
 
-        public async Task<List<Owner>> GetOwnersByLastNameAsync(string lastName)
+        public async Task<List<Owner>> SearchForOwnerAsync(string searchValue)
         {
-            var owners = await _vetClinicStore.GetOwnersByLastNameAsync(lastName);
+            var owners = await _vetClinicStore.SearchForOwnerAsync(searchValue);
 
-            if(((owners?.Count ?? 0) != 0))
+            if (owners != null)
             {
                 foreach (var owner in owners)
                 {
                     owner.OwnerPets = await _vetClinicStore.GetPatientsByOwnerIdAsync(owner.OwnerId);
                 }
             }
-            return owners;
-        }
 
-        public async Task<List<Owner>> GetOwnersByPhoneNumber(string phoneNumber)
-        {
-            return await _vetClinicStore.GetOwnersByPhoneNumberAsync(phoneNumber);
+            return owners;
         }
 
         public async Task<Owner> CreateOwnerAsync(Owner newOwner)
