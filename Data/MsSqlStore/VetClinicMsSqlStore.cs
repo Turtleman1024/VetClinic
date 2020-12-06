@@ -212,6 +212,7 @@ namespace VetClinic.Data.MsSqlStore
             {
                 var p = new DynamicParameters(new
                 {
+                    IsActive= patientPatch.IsActive,
                     PatientId = patientPatch.PatientId,
                     PatientName = patientPatch.PatientName,
                     PatientSpecies = patientPatch.PatientSpecies,
