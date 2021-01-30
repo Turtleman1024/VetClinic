@@ -94,9 +94,9 @@ namespace VetClinic.Controllers
         /// <param name="newPatient"></param>
         /// <returns>The newly created patient</returns>
         [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
-        public async Task<IActionResult> CreatePatientAsync(int patientId, [FromBody] Patient newPatient)
+        public async Task<IActionResult> CreatePatientAsync([FromBody] Patient newPatient)
         {
-            var patient = await _vetClinic.CreatePatientAsync(patientId, newPatient);
+            var patient = await _vetClinic.CreatePatientAsync(newPatient);
             if(patient == null)
             {
                 return BadRequest("Could not Create Patient");

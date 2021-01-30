@@ -10,8 +10,10 @@ GO
 **	<History>
 **	<Date>		<Author>	<Reasoning>
 **	04/02/2020	TurtleMan	Initial Creation
+**  01/30/2020  TurtleMan	Adding IsActive Param
 *************************************************************/
-CREATE OR ALTER PROCEDURE SpCreatePatient(@PatientName VARCHAR(40),
+CREATE OR ALTER PROCEDURE SpCreatePatient(@IsActive BIT,
+										  @PatientName VARCHAR(40),
 										  @PatientSpecies VARCHAR(40),
 										  @PatientGender CHAR(1),
 										  @PatientBirthDate DATETIME2,
@@ -21,13 +23,15 @@ CREATE OR ALTER PROCEDURE SpCreatePatient(@PatientName VARCHAR(40),
 AS
 BEGIN
 	 INSERT INTO dbo.PatientInfo 
-		   (PatientName,
+		   (IsActive,
+			PatientName,
 			PatientSpecies,
 			PatientGender,
 			PatientBirthDate,
 			PatientNotes,
 			OwnerId)
-	VALUES(@PatientName,
+	VALUES(@IsActive,
+		   @PatientName,
 		   @PatientSpecies,
 		   @PatientGender,
 		   @PatientBirthDate,

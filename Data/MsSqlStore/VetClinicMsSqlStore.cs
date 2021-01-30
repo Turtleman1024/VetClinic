@@ -180,7 +180,7 @@ namespace VetClinic.Data.MsSqlStore
             return patients;
         }
 
-        public async Task<int> CreatePatientAsync(int ownerId, Patient newPatient)
+        public async Task<int> CreatePatientAsync(Patient newPatient)
         {
             int patientId = 0;
 
@@ -188,12 +188,13 @@ namespace VetClinic.Data.MsSqlStore
             {
                 var p = new DynamicParameters(new
                 {
+                    IsActive = newPatient.IsActive,
                     PatientName = newPatient.PatientName,
                     PatientSpecies = newPatient.PatientSpecies,
                     PatientGender = newPatient.PatientGender,
                     PatientBirthDate = newPatient.PatientBirthDate,
                     PatientNotes = newPatient.PatientNotes,
-                    OwnerId = ownerId
+                    OwnerId = newPatient.OwnerId
                 });
 
                 p.Add("@PatientId", dbType: DbType.Int32, direction: ParameterDirection.Output);

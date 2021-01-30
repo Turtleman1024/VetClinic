@@ -20,7 +20,7 @@ namespace VetClinic.Data.Interfaces
         Task<Patient> GetPatientByIdAsync(int patientId);
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<List<Patient>> GetActivePatientsAsync();
-        Task<int> CreatePatientAsync(int ownerId, Patient newPatient);
+        Task<int> CreatePatientAsync(Patient newPatient);
         Task UpdatePatientAsync(Patient patientPatch);
         Task<bool> DeletePatientByIdAsync(int patientId);
         Task<List<Patient>> GetPatientsNameAsync(string name);

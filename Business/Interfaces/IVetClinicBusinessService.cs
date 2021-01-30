@@ -22,7 +22,7 @@ namespace VetClinic.Business
         Task<List<Patient>> GetPatientsByOwnerIdAsync(int ownerId);
         Task<List<Patient>> GetPatientsNameAsync(string name);
         Task<List<Patient>> GetActivePatientsAsync();
-        Task<Patient> CreatePatientAsync(int patientId, Patient newPatient);
+        Task<Patient> CreatePatientAsync(Patient newPatient);
         Task<Patient> UpdatePatientAsync(int patientId, JsonPatchDocument<Patient> patientPatch);
         Task<bool> DeletePatientByIdAsync(int patientId);
     }
