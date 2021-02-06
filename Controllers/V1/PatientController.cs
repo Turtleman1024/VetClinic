@@ -28,7 +28,7 @@ namespace VetClinic.Controllers
         public async Task<IActionResult> GetAllPatientsAsync()
         {
             var patients = await _vetClinic.GetAllPatientsAsync();
-            if(((patients?.Count ?? 0) == 0))
+            if (((patients?.Count ?? 0) == 0))
             {
                 return NotFound("Could not find any Patients");
             }
@@ -61,7 +61,7 @@ namespace VetClinic.Controllers
         public async Task<IActionResult> GetActivePatientsAsync()
         {
             var activePatients = await _vetClinic.GetActivePatientsAsync();
-            if(((activePatients?.Count ?? 0) == 0))
+            if (((activePatients?.Count ?? 0) == 0))
             {
                 return NotFound("Could not find any Active Patients");
             }
@@ -97,7 +97,7 @@ namespace VetClinic.Controllers
         public async Task<IActionResult> CreatePatientAsync([FromBody] Patient newPatient)
         {
             var patient = await _vetClinic.CreatePatientAsync(newPatient);
-            if(patient == null)
+            if (patient == null)
             {
                 return BadRequest("Could not Create Patient");
             }
@@ -118,7 +118,7 @@ namespace VetClinic.Controllers
             if (patientPatch?.Operations?.Count > 0)
             {
                 var patient = await _vetClinic.UpdatePatientAsync(patientId, patientPatch);
-                if(patient != null)
+                if (patient != null)
                 {
                     return Ok(patient);
                 }
@@ -134,7 +134,7 @@ namespace VetClinic.Controllers
         /// </summary>
         /// <param name="patientId">The patient Id</param>
         [HttpDelete, Route(ApiRoutes.Patients.DeletePatient, Name = "DeletePatientAsync")]
-        public async Task<IActionResult> DeletePatientAsync(int patientId)
+        public async Task<IActionResult> DeletePatientAsync([FromQuery] int patientId)
         {
             var deleted = await _vetClinic.DeletePatientByIdAsync(patientId);
 

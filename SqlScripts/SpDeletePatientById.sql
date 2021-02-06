@@ -6,19 +6,20 @@ GO
 **	SpDeletePatientById
 **
 **	<Purpose>
-**	Sets a patient to inactive
+**	Delete Patient by id
 **
 **	<History>
 **	<Date>		<Author>	<Reasoning>
-**	04/02/2020	TurtleMan	Initial Creation
+**	02/09/2021	TurtleMan	Initial Creation
 *************************************************************/
 CREATE OR ALTER PROCEDURE [dbo].[SpDeletePatientById](@PatientId INT)
 AS
 BEGIN
-	 UPDATE dbo.PatientInfo
-		SET IsActive = 0
-	 WHERE PatientId = @PatientId AND
-	 IsActive = 1
+	 DELETE FROM dbo.PatientInfo
+	 WHERE PatientId = @PatientId;
+
+	 SELECT PatientId FROM dbo.PatientInfo 
+	 WHERE PatientId = @PatientId;
 END;
 GO
 

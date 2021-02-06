@@ -29,7 +29,7 @@ namespace VetClinic.Contracts
             public const string GetPatientsByName = Base + "/patient/name/{name}";
             public const string CreatePatient = Base + "/patient";
             public const string UpdatePatient = Base + "/patient/{patientId}";
-            public const string DeletePatient = Base + "/patient/remove/{patientId}";
+            public const string DeletePatient = Base + "/patient/remove";
         }
     }
 }

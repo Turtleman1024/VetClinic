@@ -229,15 +229,15 @@ namespace VetClinic.Data.MsSqlStore
 
         public async Task<bool> DeletePatientByIdAsync(int patientId)
         {
-            var deleted = 0;
+            var deleted = new List<Patient>();
             using (SqlConnection cn = await GetConnectionAsync())
             {
                 var p = new DynamicParameters(new { PatientId = patientId });
 
-                deleted = await cn.ExecuteAsync("dbo.SpDeletePatientById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+                deleted = (await cn.QueryAsync<Patient>("dbo.SpDeletePatientById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure)).ToList();
             }
 
-            return (deleted == 1);
+            return (deleted.Count == 0);
         }
     }
 }
