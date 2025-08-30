@@ -122,7 +122,7 @@ public class VetClinicMsSqlStore : IVetClinicStore
         {
             var p = new DynamicParameters(new { OwnerId = ownerId });
 
-            deleted = await cn.ExecuteAsync("dbo.SpDeleteOwnerById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
+            deleted = await cn.QueryFirstOrDefaultAsync<int>("dbo.SpDeleteOwnerById", p, commandTimeout: 0, commandType: CommandType.StoredProcedure);
         }
 
         return (deleted == 1);

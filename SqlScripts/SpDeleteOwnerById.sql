@@ -14,6 +14,7 @@ GO
 **	<History>
 **	<Date>		<Author>	<Reasoning>
 **	03/23/2020	TurtleMan	Initial Creation
+**  08/29/2025  TurtleMan	Return affected owner rows.
 *************************************************************/
 CREATE OR ALTER PROCEDURE [dbo].[SpDeleteOwnerById](@OwnerId INT)
 AS
@@ -22,6 +23,9 @@ BEGIN
 		SET IsActive = 0
 	 WHERE OwnerId = @OwnerId AND
 	 IsActive = 1;
+	 
+	 -- Return affected rows for owner update	 
+	 SELECT @@ROWCOUNT AS OwnerRowsAffected;
 
 	 UPDATE dbo.PatientInfo
 		SET IsActive = 0
