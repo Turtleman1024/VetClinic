@@ -56,7 +56,7 @@ public class OwnerController : ControllerBase
     /// <summary>
     /// Asynchronously search for owner
     /// </summary>
-    /// <param name="lastName">Search Value</param>
+    /// <param name="searchValue">Search Value</param>
     /// <returns>List of owners</returns>
     [HttpGet, Route(ApiRoutes.Owners.SearchForOwner, Name = "SearchForOwnerAync")]
     public async Task<IActionResult> SearchForOwnerAync(string searchValue)

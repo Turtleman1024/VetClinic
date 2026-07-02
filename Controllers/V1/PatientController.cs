@@ -90,8 +90,7 @@ public class PatientController : Controller
     /// Asynchronously create a new patient
     /// NOTE: Think this workflow will have to be changed
     /// </summary>
-    /// <param name="ownerId">The </param>
-    /// <param name="newPatient"></param>
+    /// <param name="newPatient">The patient to create</param>
     /// <returns>The newly created patient</returns>
     [HttpPost, Route(ApiRoutes.Patients.CreatePatient, Name = "CreatePatientAsync")]
     public async Task<IActionResult> CreatePatientAsync([FromBody] Patient newPatient)

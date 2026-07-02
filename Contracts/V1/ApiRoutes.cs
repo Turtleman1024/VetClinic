@@ -17,7 +17,7 @@ public static class ApiRoutes
         public const string GetOwnerById = Base + "/owner/id/{ownerId}";
         public const string CreateOwner = Base + "/owner";
         public const string UpdateOwner = Base + "/owner/{ownerId}";
-        public const string DeleteOwner = Base + "/owner/remove/{ownerId}";
+        public const string DeleteOwner = Base + "/owner/{ownerId}";
         public const string SearchForOwner = Base + "/owner/search-owner/{searchValue}";
     }
 
